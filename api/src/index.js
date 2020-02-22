@@ -11,6 +11,9 @@ const placesRoute = require("./routes/place");
 //-----------
 const app = express();
 
+// --------- body parser ----------
+app.use(express.json());
+
 //------ initiate variables ------
 const PORT = process.env.PORT || 3000;
 
@@ -23,10 +26,13 @@ app.use(
     origin: "http://localhost:*",
   })
 );
-app.use(express.json());
 
 //-------- connect to db ----------
 db();
+
+//-------- Static file ---------
+app.use("/public", express.static("public"));
+
 // --------- routes ----------
 app.get("/", (req, res) => {
   res.json({ msg: "page /" });

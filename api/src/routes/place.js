@@ -6,7 +6,7 @@ const placeController = require("../controllers/placeController");
 router
   .route("/")
   .get(placeController.index)
-  .post(placeController.createPlace);
+  .post(placeController.uploadImage, placeController.createPlace);
 
 router.route("/:id").get(placeController.searchPlace);
 
