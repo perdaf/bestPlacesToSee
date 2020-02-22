@@ -3,6 +3,8 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
 const middleware = require("./sharing/middleware");
+const db = require("./config/db");
+require("dotenv").config();
 
 //-----------
 const app = express();
@@ -19,6 +21,10 @@ app.use(
     origin: "http://localhost:*",
   })
 );
+app.use(express.json());
+
+//-------- connect to db ----------
+db();
 // --------- routes ----------
 app.get("/", (req, res) => {
   res.json({ msg: "page /" });
