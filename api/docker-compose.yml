@@ -11,8 +11,8 @@ services:
       - 27017:27017
     environment:
       - MONGO_INITDB_DATABASE= bestplaces
-      - MONGO_INITDB_ROOT_USERNAME= admin
-      - MONGO_INITDB_ROOT_PASSWORD= admin
+      # - MONGO_INITDB_ROOT_USERNAME= admin
+      # - MONGO_INITDB_ROOT_PASSWORD= admin
     networks:
       - bestplacesdb
     restart: always
@@ -24,9 +24,9 @@ services:
       - 8081:8081
     depends_on:
       - mongo
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME= admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD= admin
+    # environment:
+      # - ME_CONFIG_MONGODB_ADMINUSERNAME= admin
+      # - ME_CONFIG_MONGODB_ADMINPASSWORD= admin
     networks:
       - bestplacesdb
 

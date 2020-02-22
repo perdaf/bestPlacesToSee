@@ -5,6 +5,8 @@ const cors = require("cors");
 const middleware = require("./sharing/middleware");
 const db = require("./config/db");
 require("dotenv").config();
+//----- routes ---------
+const placesRoute = require("./routes/place");
 
 //-----------
 const app = express();
@@ -29,6 +31,8 @@ db();
 app.get("/", (req, res) => {
   res.json({ msg: "page /" });
 });
+
+app.use("/api/place", placesRoute);
 
 // ---- 404 handle and error handle ----
 app.use(middleware.notFound);

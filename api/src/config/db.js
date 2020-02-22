@@ -1,4 +1,3 @@
-// await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
 const mongoose = require("mongoose");
 
 //require chalk module to give colors to console text
@@ -11,10 +10,14 @@ const termination = chalk.bold.magenta;
 
 //export this function and imported by server.js
 module.exports = async () => {
-  await mongoose.connect(process.env.DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  try {
+    await mongoose.connect(process.env.DB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 
   mongoose.connection.on("connected", () => {
     console.log(
