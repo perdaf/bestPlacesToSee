@@ -28,8 +28,8 @@
 
 - #### [ ] Place route and logic
 
-  - [ ] GET
-  - [ ] GET/:id
+  - [x] GET
+  - [x] GET/:id
   - [ ] POST _! for image user can select a jpg need to use 'multer' and form-data_
   - [ ] PUT
   - [ ] PATCH
