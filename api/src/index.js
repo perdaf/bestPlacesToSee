@@ -23,7 +23,7 @@ app.use(morgan("common"));
 app.use(helmet());
 app.use(
   cors({
-    origin: "http://localhost:*",
+    origin: process.env.CORS_ORIGINE,
   })
 );
 
