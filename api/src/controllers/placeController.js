@@ -1,5 +1,6 @@
 const placeEntity = require("../models/place");
 const multer = require("multer");
+const fs = require("fs");
 
 const MIME_TYPES = {
   "image/jpg": "jpg",
@@ -65,7 +66,62 @@ module.exports = {
     }
     try {
       const result = await newPlace.save();
-      res.status(200).json(result);
+      res.status(201).json(result);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // ------- replace place (all fields needed) -------
+  replacePlace: async (req, res, next) => {
+    const { placeId } = req.params;
+    const newPlace = req.body;
+    try {
+      const result = await placeEntity.findByIdAndUpdate(placeId, newPlace);
+      res.status(200).json({ msg: "place succefully replaced" });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // ------- edit place (some fields needed) -------
+  updatePlace: async (req, res, next) => {
+    const { placeId } = req.params;
+    const newPlace = req.body;
+    try {
+      const result = await placeEntity.findByIdAndUpdate(placeId, newPlace);
+      res.status(200).json({ msg: "place succefully replaced" });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // ---------- delete place and image -------------
+  deletePlace: async (req, res, next) => {
+    const { placeId } = req.params;
+    try {
+      const place = await placeEntity.findById(placeId);
+      const imgUrl = place.image.replace(
+        `${req.protocol}://${req.get("host")}/`,
+        ""
+      );
+      fs.stat(imgUrl, (err, stats) => {
+        // console.log(stats)
+        if (err) {
+          return console.error(err);
+        }
+        fs.unlink(imgUrl, err => {
+          if (err) return console.error(err);
+          console.log("file deleted succefully");
+        });
+      });
+    } catch (error) {
+      next(error);
+    }
+    // -------- delete in DB ---------------
+    try {
+      const result = await placeEntity.findByIdAndDelete(placeId);
+      res.status(200).json({ result });
     } catch (error) {
       next(error);
     }

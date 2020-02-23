@@ -2,7 +2,7 @@
 
 ### TODO
 
-- #### [ ] Setup Server
+- #### Setup Server
   - [x] Install Dependencies
   - [x] Install / Setup Linter
   - [x] Setup Express App
@@ -26,14 +26,14 @@
   - mongoose can connect with a auth connection !
     - [ ] check why !
 
-- #### [ ] Place route and logic
+- #### Place route and logic
 
   - [x] GET
   - [x] GET/:id
   - [x] POST _! for image user can select a jpg need to use 'multer' and form-data_
-  - [ ] PUT
-  - [ ] PATCH
-  - [ ] DELETE/:id _Delete the associate image on folder (public/upload)_
+  - [x] PUT
+  - [x] PATCH
+  - [x] DELETE/:id _Delete the associate image on folder (public/upload)_
 
   ***
 

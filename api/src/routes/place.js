@@ -8,6 +8,11 @@ router
   .get(placeController.index)
   .post(placeController.uploadImage, placeController.createPlace);
 
-router.route("/:id").get(placeController.searchPlace);
+router
+  .route("/:placeId")
+  .get(placeController.searchPlace)
+  .put(placeController.replacePlace)
+  .patch(placeController.updatePlace)
+  .delete(placeController.deletePlace);
 
 module.exports = router;
