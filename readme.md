@@ -1,4 +1,4 @@
-# Full Stack Sharing place (beach, hotel, restaurant...)
+# Full Stack (Api: Express - mongoDb | Client: React )Sharing places (beach, hotel, restaurant...)
 
 ### TODO
 
@@ -37,7 +37,7 @@
 
   ***
 
-- [ ] Setup Client
+- [x] Setup Client
 - [ ] Create Form to add a new entry
 - [ ] Setup Map SDK on client
 - [ ] List all log entries on map
