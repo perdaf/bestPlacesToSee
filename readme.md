@@ -1,7 +1,7 @@
 
 Full Stack Sharing places \
 (Api: Express - mongoDb | Client: React ) \
-(beach, hotel, restaurant...)
+(beach, hotel, restaurant...) 
 ---
 
 ### TODO
@@ -12,8 +12,8 @@ Full Stack Sharing places \
   - [x] Setup Express App
   - [x] Setup Not Found and Error Middlewares
   - [x] Setup MongoDb with Docker
-    - mongoose can connect with a auth connection !
-    - check why [ ]!
+    - mongoose can connect with a auth connection :shit: !
+    - check why [ ] :no_mouth: !
 
   #### What data will we store?
     - Place
