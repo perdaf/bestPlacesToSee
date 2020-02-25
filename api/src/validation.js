@@ -11,7 +11,6 @@ module.exports = {
         .email(),
       password: Joi.string()
         .min(6)
-        .max(12)
         .required(),
     });
     return schema.validate(data);
@@ -23,7 +22,6 @@ module.exports = {
         .email(),
       password: Joi.string()
         .min(6)
-        .max(12)
         .required(),
     });
     return schema.validate(data);
