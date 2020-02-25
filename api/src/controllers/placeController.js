@@ -1,6 +1,9 @@
 const placeEntity = require("../models/place");
+const userEntity = require("../models/user");
+
 const multer = require("multer");
 const fs = require("fs");
+const validation = require("../validation");
 
 const MIME_TYPES = {
   "image/jpg": "jpg",
@@ -56,7 +59,19 @@ module.exports = {
 
   // ------------ create a place -------------
   createPlace: async (req, res, next) => {
+    const { error } = validation.placeValidation(req.body);
+    if (error) return res.status(400).json(error.details[0].message);
+
+    // --- recup the user
+    const { userId } = req.params;
+
     const newPlace = new placeEntity(req.body);
+    if (userId) {
+      const user = await userEntity.findById(userId);
+      newPlace.user = user;
+    } else {
+      res.status(400).json({ msg: "user failed" });
+    }
     if (req.file) {
       const file = req.file;
       const imageUrl = `${req.protocol}://${req.get("host")}/public/upload/${

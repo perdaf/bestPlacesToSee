@@ -3,9 +3,10 @@ const router = express.Router();
 
 const placeController = require("../controllers/placeController");
 
+router.route("/").get(placeController.index);
+
 router
-  .route("/")
-  .get(placeController.index)
+  .route("/:userId/create")
   .post(placeController.uploadImage, placeController.createPlace);
 
 router
