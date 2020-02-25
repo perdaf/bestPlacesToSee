@@ -27,10 +27,18 @@ var placeSchema = new Schema(
       max: 180,
       required: true,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
+    comment: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "comment",
+      },
+    ],
   },
   { timestamps: true }
 );
 
-const Place = mongoose.model("Place", placeSchema);
-
-module.exports = Place;
+module.exports = mongoose.model("Place", placeSchema);

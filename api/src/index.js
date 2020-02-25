@@ -7,6 +7,8 @@ const db = require("./config/db");
 require("dotenv").config();
 //----- routes ---------
 const placesRoute = require("./routes/place");
+const usersRoute = require("./routes/user");
+const commentRoute = require("./routes/comment");
 
 //-----------
 const app = express();
@@ -39,6 +41,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/place", placesRoute);
+app.use("/api/user", usersRoute);
+app.use("/api/comment", commentRoute);
 
 // ---- 404 handle and error handle ----
 app.use(middleware.notFound);
