@@ -58,41 +58,41 @@ Full Stack Sharing places \
 
 ##### place
 
-- [x] GET /place
-- [x] GET /place/:id
+- [x] GET ("/")
+- [x] GET ("/:id")
 - [x] POST /create
   - _( use the token to retrive userId )_
   - _( ! for image user can select a jpg need to use 'multer' and form-data )_
-- [ ] PUT /place/:id
+- [ ] PUT (":/id")
   - _( all fields needed to update place)_
-- [ ] PATCH /place/:id
+- [ ] PATCH (":/id")
   - _( only one field is needed )_
-- [ ] DELETE /place/:id
+- [ ] DELETE (":/id")
   - _( Delete the associate image on folder (public/upload) and delete comments associate )_
 
 ---
 
 ##### user
 
-- [x] GET /user
-- [x] GET /user/:id
-- [x] POST /user
-- [ ] PUT /user/:id _( all fields needed )_
-- [ ] PATCH /user/:id _( one fields needed )_
-- [ ] DELETE /user/:id
+- [x] GET ("/")
+- [x] GET ("/:id")
+- [x] POST ("/")
+- [ ] PUT ("/:id") _( all fields needed )_
+- [ ] PATCH ("/:id") _( one fields needed )_
+- [ ] DELETE ("/:id")
   - _( delete all place, comments and image associate to the user/place )_
-  - [ ] POST /user/login
+  - [ ] POST /login
     - _( return token with id and name informations)_
 
 ---
 
 #### comment
 
-- [ ] GET /comment
-- [ ] GET /comment/:id
-- [ ] POST /comment
-- [ ] PATCH /comment/:id
-- [ ] DELETE /comment/:id
+- [ ] GET ("/")
+- [ ] GET ("/:id")
+- [ ] POST ("/")
+- [ ] PATCH ("/:id")
+- [ ] DELETE ("/:id")
 
 ---
 
