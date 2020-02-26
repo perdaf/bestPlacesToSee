@@ -1,8 +1,8 @@
-Full Stack Sharing places \
-(Api: Express - mongoDb | Client: React ) \
-(beach, hotel, restaurant...)
-
----
+<h1>Full Stack Sharing places</br>
+(beach, hotel, restaurant...)</br>
+- Api: Express - mongoDb</br>
+- Client: React</br>
+</h1>
 
 ### TODO
 
@@ -26,6 +26,7 @@ Full Stack Sharing places \
       - latitude : number
       - user : ObjectId (user._id)
       - comments : [ObjectId (comment._id)]
+      - type de lieu ? (hotel, resto, plage...)
       - createdAt : Date
       - updatedAt : Date
 
@@ -39,6 +40,9 @@ Full Stack Sharing places \
       - contente : string
       - place : ObjectID (place._id)
       - user : ObjectId (user._id)
+
+    - Type de lieu ?
+      - name : string
 
 #### Setup Mongoose Model(s)
 
