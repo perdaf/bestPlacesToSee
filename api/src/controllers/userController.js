@@ -1,6 +1,7 @@
 const userEntity = require("../models/user");
 const validation = require("../validation");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   // ---------- liste all the users ----------
@@ -48,5 +49,31 @@ module.exports = {
     } catch (error) {
       next(error);
     }
+  },
+
+  loginUser: async (req, res, next) => {
+    const { error } = validation.loginValidation(req.body);
+    if (error) return res.status(400).json(error.details[0].message);
+
+    // checking if user email already exist
+    const user = await userEntity.findOne({ email: req.body.email });
+    if (!user) return res.status(400).json({ msg: "user dosen't exist" });
+
+    // check for password
+    const validPass = await bcrypt.compare(req.body.password, user.password);
+    if (!validPass) return res.status(400).json({ msg: "password invalide" });
+
+    // create and assigne a token
+    const token = jwt.sign(
+      {
+        _id: user._id,
+        name: user.name,
+      },
+      process.env.TOKEN_SECRET
+    );
+    res
+      .header("auth-token", token)
+      .status(200)
+      .json({ msg: "log in", token: token });
   },
 };

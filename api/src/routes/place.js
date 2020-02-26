@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const { auth } = require("../verifiedToken");
 
 const placeController = require("../controllers/placeController");
 
-router.route("/").get(placeController.index);
-
 router
-  .route("/:userId/create")
-  .post(placeController.uploadImage, placeController.createPlace);
+  .route("/")
+  .get(placeController.index)
+  .post(auth, placeController.uploadImage, placeController.createPlace);
 
 router
   .route("/:placeId")

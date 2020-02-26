@@ -63,11 +63,11 @@ module.exports = {
     if (error) return res.status(400).json(error.details[0].message);
 
     // --- recup the user
-    const { userId } = req.params;
+    const { _id } = req.user;
 
     const newPlace = new placeEntity(req.body);
-    if (userId) {
-      const user = await userEntity.findById(userId);
+    if (_id) {
+      const user = await userEntity.findById(_id);
       newPlace.user = user;
     } else {
       res.status(400).json({ msg: "user failed" });
