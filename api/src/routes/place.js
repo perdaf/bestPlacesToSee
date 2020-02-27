@@ -7,14 +7,14 @@ const placeController = require("../controllers/placeController");
 router.route("/:placeId/:cmtId").delete(auth, placeController.deleteComment);
 
 router
-  .route("/")
-  .get(placeController.index)
-  .post(auth, placeController.uploadImage, placeController.createPlace);
-
-router
   .route("/:placeId")
   .get(placeController.searchPlace)
   .patch(placeController.updatePlace)
-  .delete(placeController.deletePlace);
+  .delete(auth, placeController.deletePlace);
+
+router
+  .route("/")
+  .get(placeController.index)
+  .post(auth, placeController.uploadImage, placeController.createPlace);
 
 module.exports = router;

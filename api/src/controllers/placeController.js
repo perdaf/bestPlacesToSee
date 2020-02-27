@@ -140,12 +140,12 @@ module.exports = {
     const { placeId } = req.params;
     try {
       const place = await placeEntity.findById(placeId);
+      // -- delete image in folder --
       const imgUrl = place.image.replace(
         `${req.protocol}://${req.get("host")}/`,
         ""
       );
       fs.stat(imgUrl, (err, stats) => {
-        // console.log(stats)
         if (err) {
           return console.error(err);
         }
@@ -154,11 +154,19 @@ module.exports = {
           console.log("file deleted succefully");
         });
       });
-    } catch (error) {
-      next(error);
-    }
-    // -------- delete in DB ---------------
-    try {
+
+      // -- delete comments[] --
+      place.comment.forEach(async cmt => {
+        await commentEntity.findByIdAndDelete(cmt);
+      });
+
+      // -- delete place in user.place[] ---
+      const user = await userEntity.findById(place.user);
+      const filter = user.place.filter(plc => plc != place._id);
+      user.place = filter;
+      await user.save();
+
+      // -------- delete in DB ---------------
       const result = await placeEntity.findByIdAndDelete(placeId);
       res.status(200).json({ result });
     } catch (error) {

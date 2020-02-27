@@ -72,7 +72,7 @@
 - [x] PATCH (":/id")
   - _( only one field is needed )_
     - [ ] -search how to validate patch (for now dont throw error when field aren't in model)
-- [ ] DELETE (":/id")
+- [x] DELETE (":/id")
   - _( Delete the associate image on folder (public/upload) and delete comments associate )_
 
 ---
