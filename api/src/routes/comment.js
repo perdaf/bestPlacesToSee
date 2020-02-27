@@ -1,11 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
+const { auth } = require("../verifiedToken");
+
 const commentController = require("../controllers/commentController");
 
 router.route("/").get(commentController.index);
-//   .post(commentController.createComment);
+router.route("/:placeId/create").post(auth, commentController.createComment);
 
-router.route("/:id").get(commentController.searchComment);
+router
+  .route("/:cmtId")
+  .get(commentController.searchComment)
+  .patch(commentController.updateComment);
 
 module.exports = router;

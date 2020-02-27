@@ -4,6 +4,8 @@ const { auth } = require("../verifiedToken");
 
 const placeController = require("../controllers/placeController");
 
+router.route("/:placeId/:cmtId").delete(auth, placeController.deleteComment);
+
 router
   .route("/")
   .get(placeController.index)
@@ -12,7 +14,6 @@ router
 router
   .route("/:placeId")
   .get(placeController.searchPlace)
-  .put(placeController.replacePlace)
   .patch(placeController.updatePlace)
   .delete(placeController.deletePlace);
 

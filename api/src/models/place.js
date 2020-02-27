@@ -41,4 +41,4 @@ var placeSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Place", placeSchema);
+module.exports = mongoose.model("place", placeSchema);

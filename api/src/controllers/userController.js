@@ -18,8 +18,15 @@ module.exports = {
   searchUser: async (req, res, next) => {
     const userId = req.params.id;
     try {
-      const result = await userEntity.findById(userId);
-      res.status(201).json(result);
+      const result = await userEntity
+        .findById(userId)
+        .populate("place", "name")
+        .populate("comment", "contente");
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(400).json({ msg: "user not found" });
+      }
     } catch (error) {
       next(error);
     }

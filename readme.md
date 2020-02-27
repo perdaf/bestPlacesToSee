@@ -1,8 +1,7 @@
-<h1>Full Stack Sharing places</br>
-(beach, hotel, restaurant...)</br>
-- Api: Express - mongoDb</br>
+<h2>Full Stack Sharing places (beach, hotel, restaurant...)</br>
+- Api: Nodejs - Express - mongoDb</br>
 - Client: React</br>
-</h1>
+</h2>
 
 ### TODO
 
@@ -26,7 +25,8 @@
       - latitude : number
       - user : ObjectId (user._id)
       - comments : [ObjectId (comment._id)]
-      - type de lieu ? (hotel, resto, plage...)
+      - type de lieu : [ObjectId (typeLieu._id)] ?
+        - (hotel, resto, plage...)
       - createdAt : Date
       - updatedAt : Date
 
@@ -41,7 +41,7 @@
       - place : ObjectID (place._id)
       - user : ObjectId (user._id)
 
-    - Type de lieu ?
+    - Typelieu ?
       - name : string
 
 #### Setup Mongoose Model(s)
@@ -67,10 +67,11 @@
 - [x] POST /create
   - _( use the token to retrive userId )_
   - _( ! for image user can select a jpg need to use 'multer' and form-data )_
-- [ ] PUT (":/id")
-  - _( all fields needed to update place)_
-- [ ] PATCH (":/id")
+- [ ] ~~PUT (":/id")~~
+  - ~~_( all fields needed to update place)_~~
+- [x] PATCH (":/id")
   - _( only one field is needed )_
+    - [ ] -search how to validate patch (for now dont throw error when field aren't in model)
 - [ ] DELETE (":/id")
   - _( Delete the associate image on folder (public/upload) and delete comments associate )_
 
@@ -81,22 +82,23 @@
 - [x] GET ("/")
 - [x] GET ("/:id")
 - [x] POST ("/")
-- [ ] PUT ("/:id") _( all fields needed )_
+- [ ] ~~PUT ("/:id") _( all fields needed )_~~
 - [ ] PATCH ("/:id") _( one fields needed )_
 - [ ] DELETE ("/:id")
   - _( delete all place, comments and image associate to the user/place )_
-  - [ ] POST /login
-    - _( return token with id and name informations)_
+- [x] POST /login
+  - _( return token with id and name informations)_
 
 ---
 
 #### comment
 
-- [ ] GET ("/")
-- [ ] GET ("/:id")
-- [ ] POST ("/")
-- [ ] PATCH ("/:id")
-- [ ] DELETE ("/:id")
+- [x] GET ("/")
+- [x] GET ("/:id")
+- [x] POST ("/")
+- [x] PATCH ("/:id")
+  - [ ] -search how to validate patch (for now dont throw error when field aren't in model)
+- [x] DELETE ("/:id")
 
 ---
 
