@@ -12,7 +12,7 @@
 - [x] Setup Express App
 - [x] Setup Not Found and Error Middlewares
 - [x] Setup MongoDb with Docker
-  - mongoose can connect with a auth connection :shit: !
+  - mongoose can't connect with a auth connection :shit: !
   - check why [ ] :no_mouth: !
 
 #### What data will we store?
