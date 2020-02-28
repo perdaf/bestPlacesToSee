@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+const fs = require("fs");
+
 var Schema = mongoose.Schema;
 
 var placeSchema = new Schema(

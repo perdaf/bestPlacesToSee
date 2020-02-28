@@ -64,7 +64,7 @@
 
 - [x] GET ("/")
 - [x] GET ("/:id")
-- [x] POST /create
+- [x] POST ("/create")
   - _( use the token to retrive userId )_
   - _( ! for image user can select a jpg need to use 'multer' and form-data )_
 - [ ] ~~PUT (":/id")~~
@@ -74,6 +74,7 @@
     - [ ] -search how to validate patch (for now dont throw error when field aren't in model)
 - [x] DELETE (":/id")
   - _( Delete the associate image on folder (public/upload) and delete comments associate )_
+- [x] DELETE ("/:placeId/:cmtId") _(delete comment)_
 
 ---
 

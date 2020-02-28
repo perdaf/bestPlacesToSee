@@ -1,4 +1,7 @@
 const userEntity = require("../models/user");
+const placeEntity = require("../models/place");
+const commentEntity = require("../models/comment");
+
 const validation = require("../validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -58,6 +61,7 @@ module.exports = {
     }
   },
 
+  // ---------- Login a user ------------
   loginUser: async (req, res, next) => {
     const { error } = validation.loginValidation(req.body);
     if (error) return res.status(400).json(error.details[0].message);
@@ -82,5 +86,26 @@ module.exports = {
       .header("auth-token", token)
       .status(200)
       .json({ msg: "log in", token: token });
+  },
+
+  // ------------ Delete a user ---------------
+  deleteUser: async (req, res, next) => {
+    const { userId } = req.params;
+    if (req.user._id) {
+      try {
+        console.log("call delete user >>>");
+
+        const user = await userEntity.findById(userId, (err, user) => {
+          if (err) return res.status(400).json({ err });
+          // -- call the middleware pre('remove') in user model to delete the place
+          user.remove();
+        });
+        res.status(200).json({ user });
+      } catch (error) {
+        next(error);
+      }
+    } else {
+      res.status(400).json({ msg: "you are not allow to delete this user" });
+    }
   },
 };

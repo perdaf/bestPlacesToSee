@@ -25,4 +25,10 @@ var userSchema = new Schema(
   { timestamps: true }
 );
 
+userSchema.pre("remove", { query: true }, async function() {
+  console.log("call pre remove on user delete");
+  const placeToRemove = mongoose.model("place");
+  await placeToRemove.remove({ _id: { $in: this.place } }).exec();
+});
+
 module.exports = mongoose.model("user", userSchema);

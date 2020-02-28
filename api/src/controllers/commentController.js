@@ -48,7 +48,7 @@ module.exports = {
         next(error);
       }
     } else {
-      res.status(400).json({ msg: "user not found" });
+      res.status(400).json({ msg: "user not found, you can't post comment" });
     }
 
     // -- search for the place and save comment in place
@@ -69,7 +69,12 @@ module.exports = {
     // save the comment
     try {
       const result = await newComment.save();
-      res.status(201).json(result);
+      res.status(201).json({
+        msg: "comment save",
+        content: newComment.contente,
+        place: placeId,
+        user: req.user.name,
+      });
     } catch (error) {
       next(error);
     }

@@ -3,7 +3,7 @@ const userEntity = require("../models/user");
 const commentEntity = require("../models/comment");
 
 const multer = require("multer");
-const fs = require("fs");
+// const fs = require("fs");
 const validation = require("../validation");
 
 const MIME_TYPES = {
@@ -140,6 +140,10 @@ module.exports = {
     const { placeId } = req.params;
     try {
       const place = await placeEntity.findById(placeId);
+      if (!place) {
+        res.status(400).json({ msg: "place not found" });
+        return;
+      }
       // -- delete image in folder --
       const imgUrl = place.image.replace(
         `${req.protocol}://${req.get("host")}/`,
@@ -147,7 +151,7 @@ module.exports = {
       );
       fs.stat(imgUrl, (err, stats) => {
         if (err) {
-          return console.error(err);
+          return console.error("image not found in folder");
         }
         fs.unlink(imgUrl, err => {
           if (err) return console.error(err);
@@ -162,12 +166,17 @@ module.exports = {
 
       // -- delete place in user.place[] ---
       const user = await userEntity.findById(place.user);
-      const filter = user.place.filter(plc => plc != place._id);
-      user.place = filter;
-      await user.save();
+      if (user) {
+        const filter = user.place.filter(plc => plc != place._id);
+        user.place = filter;
+        await user.save();
+      }
 
       // -------- delete in DB ---------------
-      const result = await placeEntity.findByIdAndDelete(placeId);
+      const result = await placeEntity.findById(placeId, (err, place) => {
+        if (err) return res.status(400).json({ err });
+        place.remove();
+      });
       res.status(200).json({ result });
     } catch (error) {
       next(error);
