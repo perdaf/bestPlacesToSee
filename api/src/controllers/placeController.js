@@ -3,7 +3,7 @@ const userEntity = require("../models/user");
 const commentEntity = require("../models/comment");
 
 const multer = require("multer");
-// const fs = require("fs");
+const fs = require("fs");
 const validation = require("../validation");
 
 const MIME_TYPES = {
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
     cb(null, "./public/upload/");
   },
   filename: (req, file, cb) => {
-    console.log("file >>>", file);
+    // console.log("file >>>", file);
     const name = file.originalname.split(" ").join("_");
     const extension = MIME_TYPES[file.mimetype];
     cb(null, Date.now() + name);
@@ -79,7 +79,7 @@ module.exports = {
         await user.save();
         newPlace.user = user;
       } catch (error) {
-        NodeList(error);
+        next(error);
       }
     } else {
       res.status(400).json({ msg: "user not found" });
@@ -138,46 +138,57 @@ module.exports = {
   // ---------- delete place and image -------------
   deletePlace: async (req, res, next) => {
     const { placeId } = req.params;
+    const userId = req.user._id;
     try {
       const place = await placeEntity.findById(placeId);
+
       if (!place) {
         res.status(400).json({ msg: "place not found" });
         return;
       }
-      // -- delete image in folder --
-      const imgUrl = place.image.replace(
-        `${req.protocol}://${req.get("host")}/`,
-        ""
-      );
-      fs.stat(imgUrl, (err, stats) => {
-        if (err) {
-          return console.error("image not found in folder");
-        }
-        fs.unlink(imgUrl, err => {
-          if (err) return console.error(err);
-          console.log("file deleted succefully");
+      if (place.user == userId) {
+        // -- delete comments[] --
+        place.comment.forEach(async cmt => {
+          await commentEntity.findByIdAndDelete(cmt);
         });
-      });
+        // TODO: delete comment in respective user
 
-      // -- delete comments[] --
-      place.comment.forEach(async cmt => {
-        await commentEntity.findByIdAndDelete(cmt);
-      });
+        // -- delete place in user.place[] ---
+        const user = await userEntity.findById(place.user);
+        if (user) {
+          const filter = user.place.filter(plc => plc != place._id);
+          user.place = filter;
+          await user.save();
+        }
 
-      // -- delete place in user.place[] ---
-      const user = await userEntity.findById(place.user);
-      if (user) {
-        const filter = user.place.filter(plc => plc != place._id);
-        user.place = filter;
-        await user.save();
-      }
+        // -- delete image in folder --
+        // TODO: move this code in middleware trigger by remove place
+        const imgUrl = place.image.replace(
+          `${req.protocol}://${req.get("host")}/`,
+          ""
+        );
+        fs.stat(imgUrl, (err, stats) => {
+          if (err) {
+            return console.error("image not found in folder");
+          }
+          fs.unlink(imgUrl, err => {
+            if (err) return console.error(err);
+            console.log("file deleted succefully");
+          });
+        });
 
-      // -------- delete in DB ---------------
-      const result = await placeEntity.findById(placeId, (err, place) => {
-        if (err) return res.status(400).json({ err });
+        // -------- delete in DB ---------------
         place.remove();
-      });
-      res.status(200).json({ result });
+        // const result = await placeEntity.findById(placeId, (err, place) => {
+        //   if (err) return res.status(400).json({ err });
+        //   place.remove();
+        // });
+        res.status(200).json({ msg: "place deleted succesfully" });
+      } else {
+        res
+          .status(400)
+          .json({ msg: "you are not allowed to delete this place" });
+      }
     } catch (error) {
       next(error);
     }

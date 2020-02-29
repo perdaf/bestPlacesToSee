@@ -93,7 +93,7 @@ module.exports = {
     const { userId } = req.params;
     if (req.user._id) {
       try {
-        console.log("call delete user >>>");
+        // console.log("call delete user >>>");
 
         const user = await userEntity.findById(userId, (err, user) => {
           if (err) return res.status(400).json({ err });

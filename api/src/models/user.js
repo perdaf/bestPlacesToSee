@@ -1,7 +1,10 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const placeEntity = require("../models/place");
+const cmtEntity = require("../models/comment");
 
-var userSchema = new Schema(
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -25,10 +28,21 @@ var userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.pre("remove", { query: true }, async function() {
+userSchema.pre("remove", { query: true }, async function(next) {
   console.log("call pre remove on user delete");
-  const placeToRemove = mongoose.model("place");
-  await placeToRemove.remove({ _id: { $in: this.place } }).exec();
+  try {
+    // -- delete place cascading --
+    await placeEntity.deleteMany({
+      _id: { $in: this.place },
+    });
+    // -- delete comment cascading --
+    await cmtEntity.deleteMany({
+      _id: { $in: this.comment },
+    });
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = mongoose.model("user", userSchema);

@@ -68,7 +68,7 @@ module.exports = {
 
     // save the comment
     try {
-      const result = await newComment.save();
+      await newComment.save();
       res.status(201).json({
         msg: "comment save",
         content: newComment.contente,
