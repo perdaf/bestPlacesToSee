@@ -43,4 +43,8 @@ var placeSchema = new Schema(
   { timestamps: true }
 );
 
+placeSchema.pre("deleteMany", { query: true }, async function(next) {
+  console.log("Call to place pre function >>>");
+});
+
 module.exports = mongoose.model("place", placeSchema);

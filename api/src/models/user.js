@@ -28,17 +28,22 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.pre("remove", { query: true }, async function(next) {
+userSchema.pre("deleteOne", { query: true }, async function(next) {
   console.log("call pre remove on user delete");
+  console.log("this place>>>", this.place);
+  console.log("this comment >>>", this.comment);
+
+  // try {
+  //   // -- delete place cascading --
+  //   await placeEntity.deleteMany({
+  //     _id: { $in: this.place },
+  //   });
+  // } catch (error) {
+  //   next(error);
+  // }
   try {
-    // -- delete place cascading --
-    await placeEntity.deleteMany({
-      _id: { $in: this.place },
-    });
     // -- delete comment cascading --
-    await cmtEntity.deleteMany({
-      _id: { $in: this.comment },
-    });
+    await cmtEntity.deleteMany({ _id: { $in: this.comment } });
     next();
   } catch (error) {
     next(error);

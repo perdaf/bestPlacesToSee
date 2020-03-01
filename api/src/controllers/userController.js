@@ -94,13 +94,10 @@ module.exports = {
     if (req.user._id) {
       try {
         // console.log("call delete user >>>");
-
-        const user = await userEntity.findById(userId, (err, user) => {
-          if (err) return res.status(400).json({ err });
-          // -- call the middleware pre('remove') in user model to delete the place
-          user.remove();
+        await userEntity.deleteOne({ _id: userId }, (err, user) => {
+          if (err) return next(err);
+          res.status(200).json({ msg: "user deleted", user });
         });
-        res.status(200).json({ user });
       } catch (error) {
         next(error);
       }

@@ -178,12 +178,10 @@ module.exports = {
         });
 
         // -------- delete in DB ---------------
-        place.remove();
-        // const result = await placeEntity.findById(placeId, (err, place) => {
-        //   if (err) return res.status(400).json({ err });
-        //   place.remove();
-        // });
-        res.status(200).json({ msg: "place deleted succesfully" });
+        placeEntity.deleteMany({ _id: place.id }, (err, place) => {
+          if (err) return next(err);
+          res.status(200).json({ msg: "place deleted succesfully", place });
+        });
       } else {
         res
           .status(400)
