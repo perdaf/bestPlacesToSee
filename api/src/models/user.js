@@ -28,26 +28,38 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.pre("deleteOne", { query: true }, async function(next) {
+userSchema.pre("remove", async function(next) {
   console.log("call pre remove on user delete");
-  console.log("this place>>>", this.place);
-  console.log("this comment >>>", this.comment);
+  // console.log("this >>", this.place);
+  next();
 
-  // try {
-  //   // -- delete place cascading --
-  //   await placeEntity.deleteMany({
-  //     _id: { $in: this.place },
-  //   });
-  // } catch (error) {
-  //   next(error);
-  // }
   try {
+    // -- delete place cascading -^
+    await placeEntity.find({ _id: { $in: this.place } }, (err, places) => {
+      if (err) return next(err);
+      if (places) {
+        places.forEach(place => place.remove());
+      }
+    });
     // -- delete comment cascading --
-    await cmtEntity.deleteMany({ _id: { $in: this.comment } });
+    await cmtEntity.find({ _id: { $in: this.comment } }, (err, cmts) => {
+      if (err) return next(err);
+      if (cmts) {
+        cmts.forEach(cmt => cmt.remove());
+      }
+    });
     next();
   } catch (error) {
     next(error);
   }
+
+  // try {
+  //   // -- delete comment cascading --
+  //   await cmtEntity.deleteMany({ user: { $in: this._id } });
+  //   next();
+  // } catch (error) {
+  //   next(error);
+  // }
 });
 
 module.exports = mongoose.model("user", userSchema);

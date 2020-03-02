@@ -94,9 +94,12 @@ module.exports = {
     if (req.user._id) {
       try {
         // console.log("call delete user >>>");
-        await userEntity.deleteOne({ _id: userId }, (err, user) => {
-          if (err) return next(err);
-          res.status(200).json({ msg: "user deleted", user });
+        await userEntity.findById(userId, (err, user) => {
+          user.remove((err, removedUser) => {
+            if (err) return next(err);
+
+            res.status(200).json({ msg: "user deleted" });
+          });
         });
       } catch (error) {
         next(error);
