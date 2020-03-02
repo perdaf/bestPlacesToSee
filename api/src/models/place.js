@@ -1,5 +1,6 @@
-var mongoose = require("mongoose");
-const fs = require("fs");
+const mongoose = require("mongoose");
+const helpers = require("../controllers/helpers");
+// const path = require("path");
 
 var Schema = mongoose.Schema;
 
@@ -45,8 +46,7 @@ var placeSchema = new Schema(
 
 placeSchema.pre("remove", async function(next) {
   console.log("Call to place pre function >>>");
-  console.log("pre place >>> this id", this._id);
-
+  // helpers.deleteImage(this.image);
   next();
 });
 

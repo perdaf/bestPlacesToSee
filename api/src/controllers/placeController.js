@@ -2,8 +2,9 @@ const placeEntity = require("../models/place");
 const userEntity = require("../models/user");
 const commentEntity = require("../models/comment");
 
+const helper = require("../controllers/helpers");
+
 const multer = require("multer");
-const fs = require("fs");
 const validation = require("../validation");
 
 const MIME_TYPES = {
@@ -90,6 +91,8 @@ module.exports = {
       const imageUrl = `${req.protocol}://${req.get("host")}/public/upload/${
         file.filename
       }`;
+      // const imageUrl = `/public/upload/${file.filename}`;
+
       newPlace.image = imageUrl;
     }
     // -- save the place
@@ -162,20 +165,21 @@ module.exports = {
         }
 
         // -- delete image in folder --
+        helper.deleteImage({ img: place.image });
         // TODO: move this code in middleware trigger by remove place
-        const imgUrl = place.image.replace(
-          `${req.protocol}://${req.get("host")}/`,
-          ""
-        );
-        fs.stat(imgUrl, (err, stats) => {
-          if (err) {
-            return console.error("image not found in folder");
-          }
-          fs.unlink(imgUrl, err => {
-            if (err) return console.error(err);
-            console.log("file deleted succefully");
-          });
-        });
+        // const imgUrl = place.image.replace(
+        //   `${req.protocol}://${req.get("host")}/`,
+        //   ""
+        // );
+        // fs.stat(imgUrl, (err, stats) => {
+        //   if (err) {
+        //     return console.error("image not found in folder");
+        //   }
+        //   fs.unlink(imgUrl, err => {
+        //     if (err) return console.error(err);
+        //     console.log("file deleted succefully");
+        //   });
+        // });
 
         // -------- delete in DB ---------------
         placeEntity.findById(placeId, (err, place) => {
