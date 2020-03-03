@@ -1,19 +1,13 @@
 const fs = require("fs");
-
-const getUrl = (req, res) => {
-  return `${req.protocol}://${req.get("host")}/`;
-};
+const url = require("url");
 
 module.exports = {
-  deleteImage: img => {
+  deleteImage: (img, url) => {
     console.log("entrer deleteImage function helper");
-    console.log("req >>>", req);
-    const imgUrl = img.replace(getUrl(), "");
-    // const imgUrl = img.replace(`http://localhost:3000`, "");
-    console.log("imgUrl >>>", imgUrl);
+    const imgUrl = img.replace(url, "");
 
     fs.stat(imgUrl, (err, stats) => {
-      console.log("stats >>>", stats);
+      // console.log("stats >>>", stats);
 
       if (err) return console.error("image not found in folder");
       fs.unlink(imgUrl, err => {
@@ -21,5 +15,14 @@ module.exports = {
         console.log("file deleted succefully");
       });
     });
+  },
+
+  getUrl: req => {
+    return `${req.protocol}://${req.get("host")}/`;
+    // return url.format({
+    //   protocol: req.protocol,
+    //   host: req.get("host"),
+    //   pathname: req.originalUrl,
+    // });
   },
 };

@@ -2,9 +2,12 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
+
 const middleware = require("./sharing/middleware");
 const db = require("./config/db");
+
 require("dotenv").config();
+
 //----- routes ---------
 const placesRoute = require("./routes/place");
 const usersRoute = require("./routes/user");

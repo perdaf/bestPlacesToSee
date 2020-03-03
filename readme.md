@@ -85,7 +85,7 @@
 - [x] POST ("/")
 - [ ] ~~PUT ("/:id") _( all fields needed )_~~
 - [ ] PATCH ("/:id") _( one fields needed )_
-- [ ] DELETE ("/:id")
+- [x] DELETE ("/:id")
   - _( delete all place, comments and image associate to the user/place )_
 - [x] POST /login
   - _( return token with id and name informations)_

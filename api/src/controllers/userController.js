@@ -2,6 +2,8 @@ const userEntity = require("../models/user");
 const placeEntity = require("../models/place");
 const commentEntity = require("../models/comment");
 
+const helper = require("../controllers/helpers");
+
 const validation = require("../validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -91,15 +93,36 @@ module.exports = {
   // ------------ Delete a user ---------------
   deleteUser: async (req, res, next) => {
     const { userId } = req.params;
+
+    // _TODO: limit acces to same user or admin (create role for user)
     if (req.user._id) {
       try {
-        // console.log("call delete user >>>");
-        await userEntity.findById(userId, (err, user) => {
-          user.remove((err, removedUser) => {
-            if (err) return next(err);
+        const user = await userEntity.findById(userId);
 
-            res.status(200).json({ msg: "user deleted" });
+        // -- delete associated place and image
+        user.place.forEach(async plc => {
+          await placeEntity.findById(plc, (err, pl) => {
+            if (err) return next(err);
+            if (pl) {
+              helper.deleteImage(pl.image, helper.getUrl(req));
+              pl.remove();
+            }
           });
+        });
+
+        // -- delete associated comment --
+        user.comment.forEach(async cmts => {
+          await commentEntity.findById(cmts, (err, cmt) => {
+            if (err) return next(err);
+            if (cmt) {
+              cmt.remove();
+            }
+          });
+        });
+
+        // -- delete the user --
+        await userEntity.findByIdAndDelete(userId, (err, userDeleted) => {
+          res.status(200).json({ msg: "user deleted", userDeleted });
         });
       } catch (error) {
         next(error);

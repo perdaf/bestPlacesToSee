@@ -151,10 +151,17 @@ module.exports = {
       }
       if (place.user == userId) {
         // -- delete comments[] --
+        // _FIXME: Doesn't work as espected - comment are not deleted correctly
         place.comment.forEach(async cmt => {
+          const userCmt = await userEntity.find({ comment: cmt });
+
+          if (userCmt) {
+            const filter = userCmt.comment.filter(cmts => cmts != cmt);
+            userCmt.comment = filter;
+            userCmt.save();
+          }
           await commentEntity.findByIdAndDelete(cmt);
         });
-        // TODO: delete comment in respective user
 
         // -- delete place in user.place[] ---
         const user = await userEntity.findById(place.user);
@@ -165,8 +172,13 @@ module.exports = {
         }
 
         // -- delete image in folder --
-        helper.deleteImage({ img: place.image });
-        // TODO: move this code in middleware trigger by remove place
+        // _NOTE: move this code in middleware trigger by remove place
+        //    => can't because 'req' can't be pass to mongoose middleware
+        const thisUrl = helper.getUrl(req);
+        const img = place.image;
+
+        helper.deleteImage(img, thisUrl);
+
         // const imgUrl = place.image.replace(
         //   `${req.protocol}://${req.get("host")}/`,
         //   ""
@@ -182,13 +194,15 @@ module.exports = {
         // });
 
         // -------- delete in DB ---------------
-        placeEntity.findById(placeId, (err, place) => {
-          if (err) return next(err);
-          place.remove((err, removedPLace) => {
-            if (err) return next(err);
-            res.status(200).json({ msg: "place deleted succesfully", place });
+        try {
+          await placeEntity.findByIdAndDelete(placeId, (err, placeDeleted) => {
+            res
+              .status(200)
+              .json({ msg: "place deleted succesfully", placeDeleted });
           });
-        });
+        } catch (error) {
+          next(error);
+        }
       } else {
         res
           .status(400)
