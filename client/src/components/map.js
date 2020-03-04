@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import { listeplace } from "../services/api";
+
+import {
+  ICON_HOSTEL,
+  ICON_BEACH,
+  ICON_GITES,
+  ICON_RESTO,
+  ICON_RIVER,
+  ICON_POINTOFVIEW,
+} from "../components/iconTypeMarker";
 import "./map.scss";
 
 export default function Map() {
@@ -29,7 +38,7 @@ export default function Map() {
   /* -- _onViewportChange --
    * function whos restric the min and max long lat of the viewport
    */
-  const _onViewportChange = () => {};
+  // const _onViewportChange = () => {};!
 
   return (
     <ReactMapGL
@@ -57,6 +66,12 @@ export default function Map() {
               stroke="black"
             />
           </svg>
+          {ICON_POINTOFVIEW({ viewportzoom: viewport.zoom })}
+          {/* {ICON_RIVER({ viewportzoom: viewport.zoom })} */}
+          {/* {ICON_RESTO({ viewportzoom: viewport.zoom })} */}
+          {/* {ICON_GITES({ viewportzoom: viewport.zoom })} */}
+          {/* {ICON_BEACH({ viewportzoom: viewport.zoom })} */}
+          {/* {ICON_HOSTEL({ viewportzoom: viewport.zoom })} */}
         </Marker>
       ))}
     </ReactMapGL>
