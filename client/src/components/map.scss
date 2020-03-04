@@ -1,0 +1,10 @@
+.marker {
+  &-name {
+    color: #fff;
+  }
+  &-icon {
+    width: 24px;
+    height: 40px;
+    transform: translate(-50%, -100%);
+  }
+}
