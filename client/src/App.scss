@@ -35,6 +35,8 @@ body {
 }
 .sidePanel {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   top: 0px;
   left: 0px;
   width: 450px;
@@ -64,6 +66,7 @@ body {
   transform: translateX(0px);
   transition-duration: 500ms;
   z-index: 2;
+  cursor: pointer;
 }
 .hiddenPanelBtn {
   transform: translateX(-450px);
@@ -73,7 +76,44 @@ body {
   transform: rotate(180deg);
   transition: transform 200ms ease-in-out;
 }
+.placeType {
+  width: 90%;
+  align-self: center;
+}
+.place {
+  &-image {
+    img {
+      position: absolute;
+      top: 0;
+      left: 0px;
+      width: 100%;
+      min-height: 350px;
+      max-height: 350px;
+      object-fit: cover;
+      z-index: -1;
+    }
+  }
+  &-infos {
+    hr {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 5px 0;
+    }
+    margin-top: 300px;
+    .name > h2 {
+      margin-bottom: 0;
+    }
+    .rating {
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+    .description {
+      margin: 1.5rem 0;
+      font-size: 1.2rem;
+    }
+  }
+}
 
+// ----------- media query ---------------
 @media (max-width: 600px) {
   .title {
     font-size: 1.5rem;

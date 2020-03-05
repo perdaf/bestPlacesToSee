@@ -32,8 +32,12 @@ module.exports = {
   // ---------- list all the place ---------------
   index: async (req, res, next) => {
     try {
-      const result = await placeEntity.find();
-      res.status(200).json(result);
+      const result = await placeEntity.find().populate("comment", "contente");
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(400).json({ msg: "No place(s) found" });
+      }
     } catch (error) {
       next(error);
     }
