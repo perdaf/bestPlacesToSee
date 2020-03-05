@@ -4,12 +4,17 @@ import Map from "./components/map";
 
 function App() {
   const [showPanel, setShowPanel] = useState(true);
+  const [placeInfos, setPlaceInfos] = useState({});
 
   const _ShowHidePanel = () => {
     setShowPanel(!showPanel);
   };
 
-  console.log("showPanel >>>", showPanel);
+  const processDataInfo = data => {
+    setPlaceInfos(data);
+  };
+
+  console.log("data vus de app >>>", placeInfos);
 
   return (
     <div className="App">
@@ -54,7 +59,7 @@ function App() {
             aperiam laudantium!
           </p>
         </div>
-        <Map />
+        <Map dataInfos={processDataInfo} />
       </div>
     </div>
   );
