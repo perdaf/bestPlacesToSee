@@ -73,3 +73,21 @@ body {
   transform: rotate(180deg);
   transition: transform 200ms ease-in-out;
 }
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.5rem;
+  }
+  .sidePanel {
+    width: 250px;
+  }
+  .showHidePanelBtn {
+    left: 250px;
+  }
+  .hiddenPanel {
+    transform: translateX(-250px);
+  }
+  .hiddenPanelBtn {
+    transform: translateX(-250px);
+  }
+}
