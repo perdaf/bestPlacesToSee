@@ -1,13 +1,75 @@
-.App {
-  height: 100vh;
-  width: 100vw;
-  text-align: center;
-  overflow: hidden;
+* {
+  box-sizing: border-box;
 }
-.title {
+body {
+  overflow-x: hidden;
+}
+html,
+body {
+  padding: 0;
   margin: 0;
-  padding: 1rem 0;
-  color: #bbb;
-  background-color: lighten(#191a1a, 10%);
+}
+
+// .App {}
+
+.top {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+  background-color: lighten(#191a1a, 10%);
+  height: 60px;
+  .title {
+    color: #bbb;
+  }
+}
+.content {
+  display: flex;
+  overflow: hidden;
+  height: calc(100vh - 60px);
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  will-change: overflow;
+}
+.sidePanel {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 450px;
+  padding: 0.5rem;
+  background-color: rgba(173, 173, 173, 0.822);
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  overflow: auto;
+  height: 100%;
+  z-index: 2;
+  transform: translateX(0px);
+  transition-duration: 500ms;
+}
+.hiddenPanel {
+  transform: translateX(-450px);
+  transition-duration: 500ms;
+}
+.showHidePanelBtn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 450px;
+  padding: 0.4rem 0.8rem;
+  background-color: rgba(173, 173, 173, 0.822);
+  border-bottom-right-radius: 10px;
+  transform: translateX(0px);
+  transition-duration: 500ms;
+  z-index: 2;
+}
+.hiddenPanelBtn {
+  transform: translateX(-450px);
+  transition-duration: 500ms;
+}
+.hiddenPanelBtn > svg {
+  transform: rotate(180deg);
+  transition: transform 200ms ease-in-out;
 }
