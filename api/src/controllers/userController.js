@@ -55,12 +55,25 @@ module.exports = {
       email: req.body.email,
       password: hashPassword,
     });
+
+    // -- save user in DB --
     try {
-      const result = await newUser.save();
-      res.status(201).json(result);
+      await newUser.save();
     } catch (error) {
       next(error);
     }
+
+    // create and assigne a token
+    const token = jwt.sign(
+      {
+        _id: newUser._id,
+        name: newUser.name,
+      },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "1h" }
+    );
+    // -- return res --
+    res.status(201).json({ userId: newUser._id, email: newUser.email, token });
   },
 
   // ---------- Login a user ------------
@@ -82,7 +95,8 @@ module.exports = {
         _id: user._id,
         name: user.name,
       },
-      process.env.TOKEN_SECRET
+      process.env.TOKEN_SECRET,
+      { expiresIn: "1h" }
     );
     res
       .header("auth-token", token)
