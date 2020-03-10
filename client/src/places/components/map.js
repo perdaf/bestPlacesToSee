@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
-import { listeplace } from "../services/api";
+import { listeplace } from "../../services/api";
 
 import {
   ICON_HOSTEL,
@@ -9,7 +9,7 @@ import {
   ICON_RESTO,
   ICON_RIVER,
   ICON_POINTOFVIEW,
-} from "../components/iconTypeMarker";
+} from "./iconTypeMarker";
 import "./map.scss";
 
 export default function Map(props) {
@@ -71,12 +71,12 @@ export default function Map(props) {
                 stroke="black"
               />
             </svg>
-            {ICON_POINTOFVIEW({ viewportzoom: viewport.zoom })}
+            {/* {ICON_POINTOFVIEW({ viewportzoom: viewport.zoom })} */}
             {/* {ICON_RIVER({ viewportzoom: viewport.zoom })} */}
             {/* {ICON_RESTO({ viewportzoom: viewport.zoom })} */}
             {/* {ICON_GITES({ viewportzoom: viewport.zoom })} */}
             {/* {ICON_BEACH({ viewportzoom: viewport.zoom })} */}
-            {/* {ICON_HOSTEL({ viewportzoom: viewport.zoom })} */}
+            {ICON_HOSTEL({ viewportzoom: viewport.zoom })}
           </div>
         </Marker>
       ))}

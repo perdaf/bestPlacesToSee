@@ -1,0 +1,129 @@
+.sidePanel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0px;
+  left: 0px;
+  width: 450px;
+  padding: 0.5rem;
+  background-color: rgba(173, 173, 173, 0.822);
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  overflow: auto;
+  overflow-x: hidden;
+  height: 100%;
+  z-index: 2;
+  transform: translateX(0px);
+  transition-duration: 500ms;
+}
+.hiddenPanel {
+  transform: translateX(-450px);
+  transition-duration: 500ms;
+}
+.showHidePanelBtn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 450px;
+  padding: 0.4rem 0.8rem;
+  background-color: rgba(173, 173, 173, 0.822);
+  border-bottom-right-radius: 10px;
+  transform: translateX(0px);
+  transition-duration: 500ms;
+  z-index: 2;
+  cursor: pointer;
+}
+.hiddenPanelBtn {
+  transform: translateX(-450px);
+  transition-duration: 500ms;
+}
+.hiddenPanelBtn > svg {
+  transform: rotate(180deg);
+  transition: transform 200ms ease-in-out;
+}
+.placeType {
+  width: 90%;
+  align-self: center;
+}
+.place {
+  &-image {
+    img {
+      position: absolute;
+      top: 0;
+      left: 0px;
+      width: 100%;
+      min-height: 350px;
+      max-height: 350px;
+      object-fit: cover;
+      z-index: -1;
+    }
+  }
+  &-infos {
+    hr {
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      margin: 5px -1rem;
+    }
+    margin-top: 300px;
+    .name > h2 {
+      margin-bottom: 0;
+    }
+    .rating {
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+    .address {
+      margin: 1.5rem 0 0 1rem;
+      &-title {
+        margin-bottom: -0.5rem;
+        font-size: 1.2rem;
+      }
+    }
+    .description {
+      margin: 1.5rem 0 0 1rem;
+      &-title {
+        font-size: 1.2rem;
+      }
+      &-item {
+        margin: 0.7rem 0.1rem;
+        padding: 1.5rem;
+        background-color: rgba(#fff, 0.4);
+      }
+    }
+    .comment {
+      margin: 1.5rem 0 0 1rem;
+      &-title {
+        font-size: 1.2rem;
+      }
+      &-item {
+        margin: 0.7rem 0.1rem;
+        padding: 1.5rem;
+        background-color: rgba(#fff, 0.4);
+      }
+    }
+  }
+}
+
+.mapboxgl-ctrl-logo,
+.mapboxgl-ctrl-attrib-inner {
+  display: none !important;
+}
+
+// ----------- media query ---------------
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.5rem;
+  }
+  .sidePanel {
+    width: 250px;
+  }
+  .showHidePanelBtn {
+    left: 250px;
+  }
+  .hiddenPanel {
+    transform: translateX(-250px);
+  }
+  .hiddenPanelBtn {
+    transform: translateX(-250px);
+  }
+}
