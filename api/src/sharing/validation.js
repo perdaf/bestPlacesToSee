@@ -37,6 +37,7 @@ module.exports = {
         .min(0)
         .max(10)
         .default(0),
+      address: Joi.string().required(),
       latitude: Joi.number()
         .min(-90)
         .max(90)

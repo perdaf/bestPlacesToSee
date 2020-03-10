@@ -18,6 +18,10 @@ var placeSchema = new Schema(
       max: 10,
       default: 0,
     },
+    address: {
+      type: String,
+      require: true,
+    },
     latitude: {
       type: Number,
       min: -90,

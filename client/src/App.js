@@ -21,6 +21,10 @@ function App() {
     <div className="App">
       <div className="top">
         <h1 className="title">Welcome to Best Place To Share</h1>
+
+        <div className="userInfos">
+          <a href="#">Sign In</a>
+        </div>
       </div>
       <div className="content">
         <div

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { auth } = require("../verifiedToken");
+const { auth } = require("../sharing/verifiedToken");
 
 const placeController = require("../controllers/placeController");
 

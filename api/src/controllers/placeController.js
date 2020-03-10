@@ -5,7 +5,7 @@ const commentEntity = require("../models/comment");
 const helper = require("../controllers/helpers");
 
 const multer = require("multer");
-const validation = require("../validation");
+const validation = require("../sharing/validation");
 
 const MIME_TYPES = {
   "image/jpg": "jpg",

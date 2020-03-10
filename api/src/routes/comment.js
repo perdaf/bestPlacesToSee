@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { auth } = require("../verifiedToken");
+const { auth } = require("../sharing/verifiedToken");
 const commentController = require("../controllers/commentController");
 
 router.route("/:placeId/create").post(auth, commentController.createComment);

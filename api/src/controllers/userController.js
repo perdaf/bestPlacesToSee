@@ -4,7 +4,7 @@ const commentEntity = require("../models/comment");
 
 const helper = require("../controllers/helpers");
 
-const validation = require("../validation");
+const validation = require("../sharing/validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
